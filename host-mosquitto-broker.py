@@ -1,3 +1,4 @@
+# Import required libraries
 import pymongo
 import paho.mqtt.client as mqtt
 from datetime import datetime, timezone
@@ -5,14 +6,15 @@ import json
 from pymongo.server_api import ServerApi
 
 # MongoDB Atlas configuration
-uri = "mongodb+srv://admin:test123@cpc357-assignment2-smar.qqfpx.mongodb.net/"
+# You are required to change the <username> and <password> to your own username and password
+uri = "mongodb+srv://<username>:<password>@cpc357-assignment2-smar.qqfpx.mongodb.net/"
 
-# MongoDB configuration
+# MongoDB configuration to create a new client and connect to the server
 mongo_client = pymongo.MongoClient(uri, server_api=ServerApi('1'))
 db = mongo_client["smarthome"]
 collection = db["iot"]
 
-# Send a ping to confirm a successful connection
+# Send a ping to confirm a successful connection with MongoDB Atlas
 try:
     mongo_client.admin.command('ping')
     print("Pinged your deployment. You successfully connected to MongoDB!")
@@ -20,7 +22,7 @@ except Exception as e:
     print(e)
 
 # MQTT configuration
-mqtt_broker_address = "34.71.153.169"  # Local broker address
+mqtt_broker_address = <VM External IP>  # Broker address (You are required to change the <VM External IP> to the external IP of the VM Instance created)
 mqtt_topic = "iot"
 
 # Define the callback function for connection
@@ -40,7 +42,7 @@ def on_message(client, userdata, message):
     timestamp = datetime.now(timezone.utc)
     datetime_obj = timestamp.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
     
-    # Insert the data into MongoDB
+    # Insert the data into the MongoDB collection (E.g. database=smarthome and collection=iot)
     document = {"timestamp": datetime_obj, "data": json.loads(payload)}
     collection.insert_one(document)
     print("Data ingested into MongoDB")
