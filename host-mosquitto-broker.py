@@ -53,7 +53,7 @@ if __name__ == "__main__":
     client.on_connect = on_connect
     client.on_message = on_message
     
-    # Start the Mosquitto MQTT broker locally
+    # Start the Mosquitto MQTT broker
     print("Starting the MQTT broker...")
     
     # Connect to the local MQTT broker
