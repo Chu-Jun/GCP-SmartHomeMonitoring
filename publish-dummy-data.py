@@ -1,9 +1,10 @@
+# Import required libraries
 import paho.mqtt.client as mqtt
 import json
 import time
 
 # MQTT configuration
-mqtt_broker_address = "34.71.153.169"  # Local broker address
+mqtt_broker_address = <External IP for VM>  # Broker address (You are required to change the <External IP for VM> to the external IP for VM instance created)
 mqtt_topic = "iot"
 
 # Publish dummy data to MQTT broker
@@ -67,7 +68,7 @@ if __name__ == "__main__":
     # MQTT client setup
     client = mqtt.Client()
     
-    # Connect to the local MQTT broker
+    # Connect to the MQTT broker
     client.connect(mqtt_broker_address, 1883, 60)
     
     # Publish dummy data to MQTT broker
